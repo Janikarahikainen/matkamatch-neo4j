@@ -1,5 +1,3 @@
-//----TESTIDATA---
-
 // 1. Tyhjennetään kanta alkutilaan
 MATCH (n) DETACH DELETE n;
 
@@ -43,35 +41,6 @@ CREATE
 
 
 
-//------KYSELYT-------
 
 
 
-//Palauttaa graafin tietokannasta
-MATCH (n) RETURN n
-
-
-//Suosituimmat lomakohteet
-MATCH (k:Kohde)<-[:HALUAA]-(h:Henkilö)
-RETURN k.nimi AS Kohde, count(h) AS Halukkaiden_Määrä
-ORDER BY Halukkaiden_Määrä DESC;
-
-
-//Kertoo ketkä on lomalla milläkin viikolla
-MATCH (h:Henkilo)-[:VAPAA]->(a:Ajankohta)
-RETURN a.viikko AS Viikko,  
-       collect(h.nimi) AS Keillä_Vapaata
-ORDER BY Viikko;
-
-
-//Hakee täydelliset matchit
-MATCH (kaikki:Henkilo)
-WITH count(kaikki) AS porukan_koko
-MATCH (h:Henkilo)-[:HALUAA]->(k:Kohde),
-      (h)-[:VAPAA]->(a:Ajankohta)
-WITH k, a, count(h) AS osumat, porukan_koko, collect(h.nimi) AS nimet
-WHERE osumat = porukan_koko
-RETURN k.nimi AS Kohde, 
-       a.viikko AS Viikko, 
-       osumat AS Osallistujat,
-       nimet AS Henkilöt;

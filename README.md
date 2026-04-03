@@ -28,6 +28,8 @@ Tietokanta koostuu kolmesta solmutyypistä ja niiden välisistä suhteista:
 
 (:Henkilo)-[:VAPAA]->(:Ajankohta)
 
+![Matkamatch graafi](./images/matkamatch.png)
+
 ## Asennus ja testaus (Docker)
 
 Projekti on paketoitu Dockerilla helppoa testausta varten.
@@ -52,22 +54,24 @@ Salasana: salasana123
 
 ### Tietokannan alustus
 
-Kopioi ja aja queries.cypher tiedostosta testidata Neo4j Browserin syötekenttään.
+Kopioi ja aja setup.cypher tiedoston testidata Neo4j Browserin syötekenttään.
 Tämä luo testidatan (henkilöt, kohteet ja viikot) sekä niiden väliset suhteet.
 
 Huom: Skripti tyhjentää tietokannan ennen luontia (DETACH DELETE), joten voit ajaa sen uudelleen milloin tahansa.
 
 ### Kyselyt
 
-queries.cypher tiedosta löytyy cypher kyselyt, joita voit koittaa. Niillä löydät mm. suosituimmat lomakohteen sekä parhaimman loma matchin.
+queries.md tiedosta löytyy cypher kyselyt, joita voit koittaa. Niillä löydät mm. suosituimmat lomakohteen sekä parhaimman loma matchin.
 
 ## Pohdinta: Mallin arviointi ja jatkokehitys
 
 ### Mallin vahvuudet
 
-- Suorituskyky koosteissa: Kyselyt, kuten "kuinka monta prosenttia porukasta on vapaana", ovat graafissa erittäin tehokkaita, koska ne perustuvat suoraan solmujen välisiin kytkentöihin ilman raskasta laskentaa.
+- **Suorituskyky koosteissa**: Kyselyt, kuten "kuinka monta prosenttia porukasta on vapaana", ovat graafissa erittäin tehokkaita, koska ne perustuvat suoraan solmujen välisiin kytkentöihin ilman raskasta laskentaa.
 
-- Skaalautuvuus ryhmäkoon mukaan: Dynaamiset kyselyt mahdollistavat sen, että järjestelmä toimii automaattisesti riippumatta siitä, onko käyttäjiä neljä vai neljätuhatta.
+- **Skaalautuvuus ryhmäkoon mukaan**: Dynaamiset kyselyt mahdollistavat sen, että järjestelmä toimii automaattisesti riippumatta siitä, onko käyttäjiä neljä vai neljätuhatta.
+
+- Valittu malli on erinomainen pienen kaveriporukan lomasuunnitteluun. Se hyödyntää Neo4j:n vahvuuksia datan visualisoinnissa ja nopeassa hakuprosessissa.
 
 ### Mallin rajoitukset ja "Valemätsien" haaste
 
@@ -82,8 +86,3 @@ queries.cypher tiedosta löytyy cypher kyselyt, joita voit koittaa. Niillä löy
 - Uusi rakenne: (:Henkilo)-[:TEKI]->(:Toive)-[:KOHDE]->(:Kohde) ja (:Toive)-[:AIKA]->(:Ajankohta).
 
 - Tämä poistaisi kaikki valemätsit, mutta tekisi graafista monimutkaisemman lukea.
-
-### Johtopäätös
-
-- Valittu malli on erinomainen harjoitustyöksi ja pienen kaveriporukan lomasuunnitteluun.
-- Se hyödyntää Neo4j:n vahvuuksia datan visualisoinnissa ja nopeassa hakuprosessissa.
