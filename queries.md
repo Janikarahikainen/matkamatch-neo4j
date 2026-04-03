@@ -7,7 +7,7 @@ Tässä on kokoelma hyödyllisiä Cypher-kyselyitä matkatietokannan analysointi
 ### Visualisoi koko graafi
 
 ```
-MATCH (n) RETURN n
+MATCH (n) RETURN n;
 ```
 
 ### Suosituimmat lomakohteet
@@ -27,7 +27,8 @@ RETURN a.viikko AS Viikko,
 ORDER BY Viikko;
 ```
 
-### Hakee täydelliset matchit
+### Koko porukan reissu
+Tämä kysely palauttaa tuloksia vain, jos jokainen tietokannassa oleva henkilö on vapaana samalla viikolla ja haluaa samaan kohteeseen.
 
 ```
 MATCH (kaikki:Henkilo)
@@ -51,7 +52,7 @@ MERGE (kalle:Henkilo {nimi: 'Kalle'})
 WITH kalle
 MATCH (lappi:Kohde {nimi: 'Lappi'})
 MERGE (kalle)-[:HALUAA]->(lappi)
-RETURN kalle, lappi
+RETURN kalle, lappi;
 ```
 
 ## UPDATE
@@ -63,7 +64,7 @@ MERGE (kalle:Henkilo {nimi: 'Kalle'})
 WITH kalle
 MATCH (vko:Ajankohta {viikko: 28})
 MERGE (kalle)-[:VAPAA]->(vko)
-RETURN kalle, vko
+RETURN kalle, vko;
 ```
 
 ## DELETE
@@ -72,5 +73,5 @@ RETURN kalle, vko
 
 ```
 MATCH (h:Henkilo {nimi: 'Kalle'})
-DETACH DELETE h
+DETACH DELETE h;
 ```
